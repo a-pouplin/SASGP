@@ -325,7 +325,7 @@ def plot_mnist_images(data_loader, model, path, filename='latent_x', max_test_da
 
     # Plot point-estimates x or predictive distribution according to type of model
     if isinstance(model, SASGP):
-
+        print("model is SASGP:", isinstance(model, SASGP))
         for i, x_test in enumerate(data_loader):
             if i < max_test_data:
                 x_test = x_test[0].squeeze().view(-1, 784)  # 1 x dim
@@ -380,80 +380,17 @@ def plot_mnist_images(data_loader, model, path, filename='latent_x', max_test_da
         plt.xlim([z_0_lim_min, z_0_lim_max])
         plt.ylim([z_1_lim_min, z_1_lim_max])
 
-    plt.savefig(fname=path + filename + '_images.pdf', format='pdf')
+    print(path + filename + '_images.png')
+    plt.savefig(fname=path + filename + '_images.png', format='png')
 
 
-def plot_mnist_images(data_loader, model, path, filename='latent_x', max_test_data=1000):
-    img_w, img_h = 28, 28
-    zoom = 1.2
-    fig, ax = plt.subplots(figsize=(16, 16))
-
-    z_0_lim_min, z_0_lim_max = -1.0, 1.0
-    z_1_lim_min, z_1_lim_max = -1.0, 1.0
-
-    # Plot point-estimates x or predictive distribution according to type of model
-    if isinstance(model, SASGP):
-
-        for i, x_test in enumerate(data_loader):
-            if i < max_test_data:
-                x_test = x_test[0].squeeze().view(-1, 784)  # 1 x dim
-                x_test = Variable(x_test).float()
-                z_test = model.amortization_net(x_test)
-
-                for n, x_n in enumerate(x_test):
-                    image = x_n.detach().numpy().reshape((img_w, img_h))
-                    im = OffsetImage(image, zoom=zoom, cmap=plt.cm.gray)
-                    ab = AnnotationBbox(im, (z_test[n, 0].detach().numpy().flatten(),
-                                             z_test[n, 1].flatten().detach().numpy().flatten()),
-                                        xycoords='data', frameon=False)
-                    ax.add_artist(ab)
-
-                    if z_test[n, 0].detach().numpy().flatten() < z_0_lim_min:
-                        z_0_lim_min = z_test[n, 0].detach().numpy().flatten()
-                    if z_test[n, 0].detach().numpy().flatten() > z_0_lim_max:
-                        z_0_lim_max = z_test[n, 0].detach().numpy().flatten()
-                    if z_test[n, 1].detach().numpy().flatten() < z_1_lim_min:
-                        z_1_lim_min = z_test[n, 1].detach().numpy().flatten()
-                    if z_test[n, 1].detach().numpy().flatten() > z_1_lim_max:
-                        z_1_lim_max = z_test[n, 1].detach().numpy().flatten()
-
-        plt.xlim([z_0_lim_min, z_0_lim_max])
-        plt.ylim([z_1_lim_min, z_1_lim_max])
-
-    elif isinstance(model, BayesianSASGP):
-        print('here')
-        for i, x_test in enumerate(data_loader):
-            if i < max_test_data:
-                x_test = x_test[0].squeeze().view(-1, 784)  # 1 x dim
-                x_test = Variable(x_test).float()
-                z_test = model.mu_z(x_test)
-
-                for n, x_n in enumerate(x_test):
-                    image = x_n.detach().numpy().reshape((img_w, img_h))
-                    im = OffsetImage(image, zoom=zoom, cmap=plt.cm.gray)
-                    ab = AnnotationBbox(im, (z_test[n, 0].detach().numpy().flatten(),
-                                             z_test[n, 1].flatten().detach().numpy().flatten()),
-                                        xycoords='data', frameon=False)
-                    ax.add_artist(ab)
-
-                    if z_test[n, 0].detach().numpy().flatten() < z_0_lim_min:
-                        z_0_lim_min = z_test[n, 0].detach().numpy().flatten()
-                    if z_test[n, 0].detach().numpy().flatten() > z_0_lim_max:
-                        z_0_lim_max = z_test[n, 0].detach().numpy().flatten()
-                    if z_test[n, 1].detach().numpy().flatten() < z_1_lim_min:
-                        z_1_lim_min = z_test[n, 1].detach().numpy().flatten()
-                    if z_test[n, 1].detach().numpy().flatten() > z_1_lim_max:
-                        z_1_lim_max = z_test[n, 1].detach().numpy().flatten()
-
-        plt.xlim([z_0_lim_min, z_0_lim_max])
-        plt.ylim([z_1_lim_min, z_1_lim_max])
-
-    plt.savefig(fname=path + filename + '_images.pdf', format='pdf')
 
 def plot_reuters_colors(data_loader, labels, model, path, filename='latent_x_color'):
     fig, ax = plt.subplots(figsize=(16, 16))
 
     data_dimension = 2000
+    z_0 = [-1,1]
+    z_1 = [-1,1]
     z_0_lim_min, z_0_lim_max = -1.0, 1.0
     z_1_lim_min, z_1_lim_max = -1.0, 1.0
 
@@ -509,7 +446,7 @@ def plot_reuters_colors(data_loader, labels, model, path, filename='latent_x_col
         plt.xlim([z_0_lim_min, z_0_lim_max])
         plt.ylim([z_1_lim_min, z_1_lim_max])
 
-    plt.savefig(fname=path + filename + '_color.pdf', format='pdf')
+    plt.savefig(fname=path + filename + '_color.png', format='png')
 
 def plot_fashionmnist_images(data_loader, model, path, filename='latent_x', max_test_data=1000):
     img_w, img_h = 28, 28

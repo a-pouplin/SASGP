@@ -59,8 +59,8 @@ def train_sas(model, data_loader, args):
     loss_curve = batch * torch.tensor(loss_curve)
 
     # saving
-    if args.save == 'yes':
-        save_model(loss_curve, loss_time, model, args, filename=args.filename)
+    # if args.save == 'yes':
+    save_model(loss_curve, loss_time, model, args, filename=args.filename)
 
     return loss_curve, loss_time, model
 

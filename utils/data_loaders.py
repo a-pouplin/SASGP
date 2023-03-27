@@ -78,8 +78,8 @@ def load_dataset(args):
     elif args.dataset == 'cifar':
         ## CIFAR10 // TRAIN=50.000, TEST=10.000
         transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])   # mean+std normalization
-        cifar10_train = CIFAR10(root='./data/', train=True, download=False, transform=transform)
-        cifar10_test = CIFAR10(root='./data/', train=False, download=False, transform=transform)
+        cifar10_train = CIFAR10(root='./data/', train=True, download=True, transform=transform)
+        cifar10_test = CIFAR10(root='./data/', train=True, download=False, transform=transform)
 
         if args.nof_observations < 50000:
             indices = list(range(args.nof_observations))
