@@ -50,15 +50,15 @@ def create_parser():
     parser.add_argument('--ard', '-ard', default=True, type=str2bool, help='ARD kernel? [yes, no, true, false]')
 
     # Specific for the toy regression experiment
-    parser.add_argument('--true_sigma', default=0.2, type=float, help='true likelihood noise')
-    parser.add_argument('--true_ls', default=0.5, type=float, help='true lengthscale of the RBF kernel')
-    parser.add_argument('--true_a', default=1.0, type=float, help='true amplitude of the RBF kernel')
+    parser.add_argument('--true_sigma', default=1, type=float, help='true likelihood noise')
+    parser.add_argument('--true_ls', default=0.1, type=float, help='true lengthscale of the RBF kernel')
+    parser.add_argument('--true_a', default=0.1, type=float, help='true amplitude of the RBF kernel')
 
     # Optimization
     parser.add_argument('--jitter', type=float, default=1e-5, help='jitter')
     parser.add_argument('--seed', type=int, default=0, help='seed for randomness generator')
-    parser.add_argument('--num_epochs', '-e', type=int, default=100, help='number of epochs in the optimization')
-    parser.add_argument('--lr', '-lr', type=float, default=1e-2, help='learning rate for the model')
+    parser.add_argument('--num_epochs', '-e', type=int, default=500, help='number of epochs in the optimization')
+    parser.add_argument('--lr', '-lr', type=float, default=1e-3, help='learning rate for the model')
 
     # Extra
     parser.add_argument('--comment', type=str, default='', help='brief explain explanation')
